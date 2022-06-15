@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Task from './components/Overview'
 
 function App() {
+  const [typedData, setTypedData] = React.useState('')
+
+  function addTypedData(event) {
+    setTypedData(event.target.value)
+  }
+
+  const [allData, setAllData] = React.useState([])
+
+  function addData() {
+    setAllData(prevInputData => {
+      return [...prevInputData, typedData]
+    })
+  }
+
+  const tasks = allData.map((task, index) => {
+    const item = <Task data={task} key={index}></Task>
+    return item
+  })
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input
+        type="text"
+        value={typedData}
+        onChange={addTypedData}>
+      </input>
+
+      <button
+        onClick={addData}
+      >
+      hello
+      </button>
+      <ul>
+        {tasks}
+      </ul>
     </div>
-  );
+  )
 }
 
 export default App;
